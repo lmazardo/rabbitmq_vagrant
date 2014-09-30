@@ -27,17 +27,18 @@ class rabbit() {
     ensure => present,
     content => "[{rabbit, [{loopback_users, []}, {cluster_nodes, {['rabbit@rabbit1', 'rabbit@rabbit2'], disc}}]}].",
     notify => Service['rabbitmq-server'],
-  } -> exec { 'set rabbit ha policy':
-    command => 'rabbitmqctl set_policy ha ".*" \'{"ha-mode":"all"}\'',
-    unless => "rabbitmqctl list_policies  | cut -f2 | grep '^ha$'" 
-  }
+  } 
 
   exec{ 'purge first rabbit launch':
     command => 'rabbitmqctl stop_app; rabbitmqctl reset; killall epmd beam; echo OK',
     refreshonly => true,
   } -> service{ 'rabbitmq-server':
     ensure => running,
+  } -> exec { 'set rabbit ha policy':
+    command => 'rabbitmqctl set_policy ha ".*" \'{"ha-mode":"all"}\'',
+    unless => "rabbitmqctl list_policies  | cut -f2 | grep '^ha$'" 
   }
+
 }
 
 include rabbit
