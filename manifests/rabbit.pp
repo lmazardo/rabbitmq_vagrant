@@ -25,7 +25,7 @@ class rabbit() {
     notify => Service['rabbitmq-server'],
   } -> file {'/etc/rabbitmq/rabbitmq.config':
     ensure => present,
-    content => "[{rabbit, [{cluster_nodes, {['rabbit@rabbit1', 'rabbit@rabbit2'], disc}}]}].",
+    content => "[{rabbit, [{loopback_users, []}, {cluster_nodes, {['rabbit@rabbit1', 'rabbit@rabbit2'], disc}}]}].",
     notify => Service['rabbitmq-server'],
   }
 
