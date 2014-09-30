@@ -14,11 +14,16 @@ Cd inside rabbitmq_vagrant and launch both rabbit1 and rabbit2 virtual machines:
 
 # Playing with clients
 
-If all went well, you will find test_clients/send.py and test_clients/receive.py two python programs that can send and receive messages from the cluster (not really a reference implementation but it works...). To run this clients, you will need the pika library:
+Two python programs can help test the cluster:
+
+    test_clients/send.py
+    test_clients/receive.py
+    
+They can send and receive messages to and from the cluster (not really a reference implementation but it works...). To run this clients, you will need the pika library:
 
     pip install pika==0.9.8
 
-Launch this clients, stop, start, rabbit on both nodes of the cluster and see what happens. To stop a rabbit node, either stop the vm (vagrant halt rabbit1) or ssh on the vm and stop rabbit:
+Launch this clients, play with the nodes of the cluster (stop one, restart it...) and see what happens. To stop a rabbit node, either stop the vm (vagrant halt rabbit1) or ssh on the vm and stop rabbit:
 
     vagrant ssh rabbit1
     sudo rabbitmqctl stop_app
